@@ -1,0 +1,6 @@
+rootProject.name = 'Privacy_preserving_Data_Mining'
+include 'Alice'
+include 'Bob'
+include 'Util'
+
+
