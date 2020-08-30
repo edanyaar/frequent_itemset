@@ -20,27 +20,44 @@ Alice and Bob are the main Classes of the software implementation and both of th
 The main functions for each actor are as follows: 
 
 ### Alice
-	**Generate_f1_alice**: initialization of Apriori algorithm - finding all frequent-1 Itemsets in the DB
-	**Generate_candidates**: generates the set of candidates k-itemsets, from F_(k-1), the set of frequent (k-1)-itemsets found in the previous step
-	**Candidate_pruning**: prune the given candidates based on the following logic: a necessary condition of candidate to be frequent is that each of its (k-1)-itemset is frequent (The Apriori condition).
-	**count_freqs**: for each itemset candidate - split it into frequencies that can and cannot be computed locally.
-	**count_freq**: count the frequency of the itemset given as input via one of three methods: 
-	 if the itemset contains only local vectors - compute it locally.
-	 if the itemset contains only remote vectors - send a request to Bob for remote computation.
-	if the itemset contains both local as well as remote vectors - invoke the selected privacy preserving communication algorithm.
-	**update_freq**: add the given itemset to F_k if its frequency is larger than the minimum support. once finished checking all candidates, proceed to next step of algorithm - generating C_(k+1). 
-	**generate_A_matrix**: Generate a matrix of values that form coefficients of linear independent equations by: 
-	generating a matrix with random numbers - rand_a .
-	For every row i, replace the diagonal element with the sum of the absolute values of elements of the corresponding row in rand_a (the remaining values remain unchanged). 
-	such a matrix is diagonally dominant => is nonsingular => Linearly independent rows
-	**comm_clifton & calc_freq_vc**:  used to send the X’ vector to bob and perform the dot product calculation upon receiving S,Y’. 
-	**comm_homomorphic & decrypt_homomorphic**: used to send the encrypted X vector to bob and to decrypt the dot product received from him. 
+
+**Generate_f1_alice**: initialization of Apriori algorithm - finding all frequent-1 Itemsets in the DB
+
+**Generate_candidates**: generates the set of candidates k-itemsets, from F_(k-1), the set of frequent (k-1)-itemsets found in the previous step
+
+**Candidate_pruning**: prune the given candidates based on the following logic: a necessary condition of candidate to be frequent is that each of its (k-1)-itemset is frequent (The Apriori condition).
+
+**count_freqs**: for each itemset candidate - split it into frequencies that can and cannot be computed locally.
+
+**count_freq**: count the frequency of the itemset given as input via one of three methods: 
+
+1)	 if the itemset contains only local vectors - compute it locally.
+2)	 if the itemset contains only remote vectors - send a request to Bob for remote computation.
+3)	 if the itemset contains both local as well as remote vectors - invoke the selected privacy preserving communication algorithm.
+	
+**update_freq**: add the given itemset to F_k if its frequency is larger than the minimum support. once finished checking all candidates, proceed to next step of algorithm - generating C_(k+1). 
+
+**generate_A_matrix**: Generate a matrix of values that form coefficients of linear independent equations by: 
+
+1) 	generating a matrix with random numbers - rand_a .
+2) 	For every row i, replace the diagonal element with the sum of the absolute values of elements of the corresponding row in rand_a (the remaining values remain unchanged). 
+	- such a matrix is diagonally dominant => is nonsingular => Linearly independent rows
+	
+**comm_clifton & calc_freq_vc**:  used to send the X’ vector to bob and perform the dot product calculation upon receiving S,Y’. 
+
+**comm_homomorphic & decrypt_homomorphic**: used to send the encrypted X vector to bob and to decrypt the dot product received from him. 
+
 ### Bob
-	**generate_f1_Bob**: initialization of Apriori algorithm - finding all frequent-1 Itemsets in the DB. Sends the results to Alice. 
-	**count_freq**: used to calculate the frequency for local itemsets.
-	**count_freq_vc & count_freq_homomorphic**: used to calculate the local part of a shared itemset according to the relevant algorithm. 
+
+**generate_f1_Bob**: initialization of Apriori algorithm - finding all frequent-1 Itemsets in the DB. Sends the results to Alice. 
+
+**count_freq**: used to calculate the frequency for local itemsets.
+
+**count_freq_vc & count_freq_homomorphic**: used to calculate the local part of a shared itemset according to the relevant algorithm. 
+
 ### General 
-	**Paillier**: the implementation of the Paillier cryptosystem used in the homomorphic algorithm. Includes encrypt/dycript methods. 
+
+**Paillier**: the implementation of the Paillier cryptosystem used in the homomorphic algorithm. Includes encrypt/dycript methods. 
 	
 ## Running the code
 
